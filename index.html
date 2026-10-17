@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AeroNITK | PL-130N: Introduction to Technical Activities - 1</title>
+
+  <!-- Distinctive Google Fonts: Orbitron (Display/Aviation HUD), Rajdhani (Technical Subheads), Plus Jakarta Sans (Body), JetBrains Mono (Telemetry) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Orbitron:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- GSAP Core + MotionPathPlugin (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js" defer></script>
+
+  <!-- Three.js (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+  <!-- Official Instagram & Tenor Embed Scripts (Loaded once) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
+  <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+  <!-- Main Presentation Logic -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- ================= SKY & DRIFTING CLOUDS PARALLAX BACKGROUND ================= -->
+  <div id="sky-bg" aria-hidden="true">
+    <div class="sky-gradient"></div>
+    <div class="hud-grid"></div>
+    <div class="cloud-layer cloud-layer-1" data-parallax="0.02">
+      <svg class="cloud-svg c1" viewBox="0 0 600 220"><path fill="currentColor" d="M135,180 C85,180 45,145 45,100 C45,62 72,30 108,22 C125,-2 162,-10 192,8 C215,-12 255,-12 278,12 C315,2 355,25 362,62 C402,65 432,98 432,138 C432,162 412,180 385,180 Z"/></svg>
+      <svg class="cloud-svg c2" viewBox="0 0 600 220"><path fill="currentColor" d="M115,175 C65,175 35,140 35,98 C35,60 65,30 100,25 C120,0 158,-8 188,10 C215,-10 250,-8 272,15 C310,5 348,28 355,65 C395,68 425,100 425,138 C425,160 405,175 375,175 Z"/></svg>
+    </div>
+    <div class="cloud-layer cloud-layer-2" data-parallax="0.045">
+      <svg class="cloud-svg c3" viewBox="0 0 600 220"><path fill="currentColor" d="M135,180 C85,180 45,145 45,100 C45,62 72,30 108,22 C125,-2 162,-10 192,8 C215,-12 255,-12 278,12 C315,2 355,25 362,62 C402,65 432,98 432,138 C432,162 412,180 385,180 Z"/></svg>
+      <svg class="cloud-svg c4" viewBox="0 0 600 220"><path fill="currentColor" d="M115,175 C65,175 35,140 35,98 C35,60 65,30 100,25 C120,0 158,-8 188,10 C215,-10 250,-8 272,15 C310,5 348,28 355,65 C395,68 425,100 425,138 C425,160 405,175 375,175 Z"/></svg>
+    </div>
+    <div class="cloud-layer cloud-layer-3" data-parallax="0.075">
+      <svg class="cloud-svg c5" viewBox="0 0 600 220"><path fill="currentColor" d="M135,180 C85,180 45,145 45,100 C45,62 72,30 108,22 C125,-2 162,-10 192,8 C215,-12 255,-12 278,12 C315,2 355,25 362,62 C402,65 432,98 432,138 C432,162 412,180 385,180 Z"/></svg>
+    </div>
+  </div>
+
+  <!-- ================= GLOBAL THREE.JS 3D CANVAS (For Template D Slides) ================= -->
+  <canvas id="three-canvas" aria-hidden="true"></canvas>
+
+  <!-- ================= GLOBAL SVG FLYOVER OVERLAY (For Template A & Plane Transitions) ================= -->
+  <div id="flyover-layer" aria-hidden="true">
+    <svg id="flyover-svg" viewBox="0 0 1440 800" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="contrailGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#38bdf8" stop-opacity="0" />
+          <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.65" />
+          <stop offset="100%" stop-color="#f59e0b" stop-opacity="1" />
+        </linearGradient>
+        <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="5" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+      </defs>
+      <path id="flight-curve" d="M -120,640 C 320,620 480,150 860,290 C 1120,380 1290,140 1560,90" fill="none" stroke="url(#contrailGrad)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2200" stroke-dashoffset="2200" filter="url(#glowFilter)" />
+      <g id="flying-jet" transform="translate(-150, 640)">
+        <path d="M42,0 L-12,-18 L-6,-4 L-26,-12 L-22,0 L-26,12 L-6,4 L-12,18 Z" fill="#f8fafc" stroke="#38bdf8" stroke-width="2"/>
+        <circle cx="-24" cy="0" r="5" fill="#f59e0b" filter="url(#glowFilter)"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ================= TOP HUD NAVIGATION BAR ================= -->
+  <header class="hud-header">
+    <div class="hud-brand">
+      <img src="images/aeronitk_logo.png" alt="AeroNITK Logo" class="hud-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
+      <span class="hud-logo-fallback">✈ AERONITK</span>
+      <img src="images/nitk_logo.png" alt="NITK Logo" class="hud-logo nitk-badge" onerror="this.style.display='none';" />
+      <div class="hud-meta">
+        <span class="hud-course">PL-130N</span>
+        <span class="hud-divider">//</span>
+        <span class="hud-club">TEAM AERONITK</span>
+      </div>
+    </div>
+
+    <div class="hud-telemetry">
+      <div class="telemetry-pill">
+        <span class="t-label">SLIDE</span>
+        <span id="slide-counter" class="t-val">01 / 54</span>
+      </div>
+      <div class="telemetry-pill hide-mobile">
+        <span class="t-label">TEMPLATE</span>
+        <span id="template-badge" class="t-val">TPL-A</span>
+      </div>
+      <button id="slide-index-btn" class="hud-icon-btn" title="Jump to Slide (G)" aria-label="Open Slide Navigator">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </button>
+      <button id="fullscreen-btn" class="hud-icon-btn" title="Toggle Fullscreen (F)" aria-label="Toggle Fullscreen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= SLIDE JUMP DRAWER ================= -->
+  <aside id="slide-drawer" class="slide-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <h3>FLIGHT DECK // SLIDE INDEX (1–54)</h3>
+      <button id="close-drawer-btn" class="hud-icon-btn" aria-label="Close Navigator">✕</button>
+    </div>
+    <div id="drawer-grid" class="drawer-grid"></div>
+  </aside>
+
+  <!-- ================= MAIN SLIDE STAGE ================= -->
+  <main id="presentation-stage" class="stage" role="region" aria-label="Interactive Presentation Stage">
+    <!-- Populated dynamically by script.js with all 54 verbatim slides -->
+  </main>
+
+  <!-- ================= BOTTOM CONTROLS & PROGRESS BAR ================= -->
+  <footer class="hud-footer">
+    <div class="progress-track" id="progress-track" title="Click to scrub slide">
+      <div class="progress-fill" id="progress-fill">
+        <span class="progress-plane">✈</span>
+      </div>
+    </div>
+
+    <div class="nav-controls">
+      <button id="prev-btn" class="nav-btn" aria-label="Previous Slide">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>PREV</span>
+      </button>
+
+      <div id="slide-footer-meta" class="slide-footer-meta">
+        PL130N • AeroNITK
+      </div>
+
+      <button id="next-btn" class="nav-btn nav-btn-primary" aria-label="Next Slide">
+        <span>NEXT</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+  </footer>
+
+</body>
+</html>
